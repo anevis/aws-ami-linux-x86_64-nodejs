@@ -1,0 +1,58 @@
+name: Build AMI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Packer
+      uses: hashicorp/setup-packer@main
+      with:
+        version: 'latest'
+        
+    - name: Initialize Packer
+      run: packer init aws-ami-nodejs.pkr.hcl
+      
+    - name: Validate Packer configuration
+      run: packer validate aws-ami-nodejs.pkr.hcl
+
+  build:
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        
+    - name: Setup Packer
+      uses: hashicorp/setup-packer@main
+      with:
+        version: 'latest'
+        
+    - name: Initialize Packer
+      run: packer init aws-ami-nodejs.pkr.hcl
+      
+    - name: Build AMI
+      run: packer build aws-ami-nodejs.pkr.hcl
+      
+    - name: Upload manifest
+      uses: actions/upload-artifact@v4
+      with:
+        name: ami-manifest
+        path: manifest.json
