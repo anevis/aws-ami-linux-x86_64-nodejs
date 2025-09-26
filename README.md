@@ -6,6 +6,7 @@ Create and publish an Amazon Machine Image (AMI) based on Amazon Linux 2023 x86_
 
 - **Amazon Linux 2023 x86_64** - Latest stable Linux distribution from AWS
 - **Node.js LTS** - Latest Long Term Support version of Node.js
+- **AWS CLI v2** - Latest AWS Command Line Interface for cloud operations
 - **Production Ready** - Pre-configured with PM2, Forever, and Nodemon
 - **Web Server Ready** - Nginx configured as reverse proxy
 - **Firewall Configured** - Ports 80, 443, 3000, and 8080 open
@@ -77,6 +78,7 @@ packer build aws-ami-nodejs.pkr.hcl
 
 - **Node.js LTS** - Latest Long Term Support version
 - **npm** - Node Package Manager
+- **AWS CLI v2** - Latest AWS Command Line Interface
 - **PM2** - Production process manager
 - **Forever** - Simple CLI tool for continuous running
 - **Nodemon** - Development tool for auto-restarting
