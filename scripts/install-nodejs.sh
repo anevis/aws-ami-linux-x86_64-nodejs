@@ -6,8 +6,14 @@ echo "Starting Node.js installation..."
 # Update the system
 sudo dnf update -y
 
-# Install required packages
-sudo dnf install -y curl wget tar gzip unzip
+# Install required packages if not already installed
+PACKAGES=()
+for pkg in wget tar gzip unzip; do
+  if ! rpm -q "${pkg}" &> /dev/null; then
+    PACKAGES+=("${pkg}")
+  fi
+done
+sudo dnf install -y "${PACKAGES[@]}"
 
 # Install Node.js using NodeSource repository (gets latest LTS)
 curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -

@@ -41,7 +41,7 @@ echo "✅ AMI build completed successfully!"
 
 if [ -f "manifest.json" ]; then
     AMI_ID=$(jq -r '.builds[0].artifact_id' manifest.json | cut -d':' -f2)
-    REGION=$(jq -r '.builds[0].custom_data.region // "us-east-1"' manifest.json)
+    REGION=$(jq -r '.builds[0].custom_data.region // "ap-southeast-2"' manifest.json)
     echo "🎉 AMI created successfully!"
     echo "AMI ID: $AMI_ID"
     echo "Region: $REGION"

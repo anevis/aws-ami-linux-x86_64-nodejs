@@ -1,4 +1,4 @@
-# AWS AMI Linux x86_64 with Node.js
+# AWS AMI Linux x86_64 with Node.js by anevis
 
 Create and publish an Amazon Machine Image (AMI) based on Amazon Linux 2023 x86_64 with the latest Node.js LTS for running Node.js web applications.
 
